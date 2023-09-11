@@ -1,0 +1,33 @@
+﻿<ui:UiWindow x:Class="RAFFLE.UI.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RAFFLE"
+        mc:Ignorable="d"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        WindowStartupLocation="CenterScreen"
+        Title="Login" Height="300" Width="600"
+		MaxHeight="300" MaxWidth="600"
+		MinHeight="300" MinWidth="600"
+		Closing="UiWindow_Closing"
+		>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="ENTER PIN..." Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <StackPanel Grid.Row="1">
+            <ui:TextBox Width="200" PlaceholderText="User Name" Name="txtUsername" Margin="5"/>
+            <ui:PasswordBox Width="200" PlaceholderText="PIN" Name="txtPassword" KeyUp="txtPassword_KeyUp" Margin="5"/>
+        </StackPanel>            
+        
+        <ui:Button Appearance="Success" Name="btnLogin" Content="ACCESS" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="btnLogin_Click"/>
+        <ui:Snackbar Title="Error" Grid.Row="2" MaxWidth="200" Appearance="Secondary" Icon="PuzzleCube24" Visibility="Visible" Message="Invalid PIN" Timeout="5000" x:Name="RootSnackBar" Margin="30 50 30 20"/>
+    </Grid>
+</ui:UiWindow>
