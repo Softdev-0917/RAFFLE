@@ -17,6 +17,7 @@ using RAFFLE.Schema;
 using Microsoft.Win32;
 using RAFFLE.Utils;
 using RAFFLE.Manager;
+using System.Globalization;
 
 namespace RAFFLE.UI
 {

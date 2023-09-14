@@ -18,6 +18,7 @@ using Microsoft.Win32;
 using RAFFLE.Utils;
 using System.IO;
 using System.Reflection;
+using System.Globalization;
 
 namespace RAFFLE.UI
 {
@@ -38,9 +39,9 @@ namespace RAFFLE.UI
         {
             txtTime.SelectedDate = DateTime.Now;
             txtTimePicker.Text = DateTime.Now.Hour + ":" + DateTime.Now.Minute;
-            txtCount.Text = "0";
-            txtPrice.Text = "0";
-            txtRate.Text = "0";
+            txtCount.Text = "1";
+            txtPrice.Text = "1";
+            txtRate.Text = "25";
 
             string executablePath = Assembly.GetExecutingAssembly().Location;
             string curDir = System.IO.Path.GetDirectoryName(executablePath);
@@ -50,22 +51,76 @@ namespace RAFFLE.UI
             SetImg.Source = img;
         }
 
+        private DateTime getDateTimeFromString(string dateString)
+        {
+            string inputFormat = "M/d/yyyyHH:mm";
+            string outputFormat = "M/d/yyyy h:mm:ss tt";
+
+            DateTime dateTime;
+            string formattedDateTime = "";
+
+            if (DateTime.TryParseExact(dateString, inputFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            {
+                formattedDateTime = dateTime.ToString(outputFormat);
+                //Console.WriteLine(formattedDateTime);
+            }
+            else
+            {
+                //Console.WriteLine("Invalid date format");
+            }
+            return Convert.ToDateTime(formattedDateTime);
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             SettingSchema.Time = txtTime.SelectedDate.Value.Date.ToShortDateString() + txtTimePicker.Text;
             SettingSchema.Rate = Convert.ToDouble(txtRate.Text);
             SettingSchema.Count = Convert.ToInt16(txtCount.Text);
             SettingSchema.Price = Convert.ToInt16(txtPrice.Text);
-            if (imgPath != null)
+            SettingSchema.Location = txtLocation.Text;
+            SettingSchema.Description = txtDescription.Text;
+
+            if (getDateTimeFromString(SettingSchema.Time) >= DateTime.Now)
             {
-                SettingSchema.Img = img;
-                SettingSchema.ImgPath = imgPath;
-                // close setting dialog
-                Builder.RaiseEvent(EventRaiseType.MainWindow);
-            } else
-            {
-                MsgHelper.ShowMessage(MsgType.Other, "Select Image");
+                MsgHelper.ShowMessage(MsgType.Other, "Invalid time");
+                return;
             }
+            if (imgPath == null)
+            {
+                MsgHelper.ShowMessage(MsgType.Other, "Invalid image");
+                return;
+            }
+            if (SettingSchema.Count <= 0)
+            {
+                MsgHelper.ShowMessage(MsgType.Other, "Invalid count");
+                return;
+            }
+            if (SettingSchema.Price <= 0 || SettingSchema.Price > 5)
+            {
+                MsgHelper.ShowMessage(MsgType.Other, "Invalid price(1-5)");
+                return;
+            }
+            if (SettingSchema.Rate <= 0 || SettingSchema.Rate > 25)
+            {
+                MsgHelper.ShowMessage(MsgType.Other, "Invalid rate(1-25)");
+                return;
+            }
+            if (SettingSchema.Location == null || SettingSchema.Location == "")
+            {
+                MsgHelper.ShowMessage(MsgType.Other, "Invalid location");
+                return;
+            }
+            if (SettingSchema.Description == null || SettingSchema.Description == "")
+            {
+                MsgHelper.ShowMessage(MsgType.Other, "Invalid description");
+                return;
+            }
+
+            SettingSchema.Img = img;
+            SettingSchema.ImgPath = imgPath;
+            // close setting dialog
+            Builder.RaiseEvent(EventRaiseType.MainWindow);
+            Builder.uiMainWindow.UpdateState();
 
         }
 

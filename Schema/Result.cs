@@ -12,11 +12,13 @@ namespace RAFFLE.Schema
         private static int m_WinnerNumber;
         private static double m_WinnerPrice;
         private static double m_AdminPrice;
+        private static int m_Remain;
         private static BitmapImage m_Img;
 
         public static int WinnerNumber { get => m_WinnerNumber; set => m_WinnerNumber = value; }
         public static double WinnerPrice { get => m_WinnerPrice; set => m_WinnerPrice = value; }
         public static double AdminPrice { get => m_AdminPrice; set => m_AdminPrice = value; }
+        public static int Remain { get => m_Remain; set => m_Remain = value; }
         public static BitmapImage Img { get => m_Img; set => m_Img = value; }
     }
 }

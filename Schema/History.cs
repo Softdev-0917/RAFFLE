@@ -16,5 +16,7 @@ namespace RAFFLE.Schema
         public float WinnerPrice { get; set; }
         public float AdminPrice { get; set; }
         public int Remain { get; set; }
+        public string Location { get; set; }
+        public string Description { get; set; }
     }
 }

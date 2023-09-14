@@ -15,6 +15,7 @@ namespace RAFFLE
         public static History uiHistory;
         public static Result uiResult;
         public static Login uiLogin;
+        public static UserBoard uiUserBoard;
 
         public static void RaiseEvent(EventRaiseType type)
         {
@@ -33,6 +34,7 @@ namespace RAFFLE
                     uiMainWindow = new MainWindow();
                     uiMainWindow.Show();
                     uiMainWindow.Visibility = System.Windows.Visibility.Visible;
+
                     break;
                 case EventRaiseType.MainWindow:
                     uiSetting.Visibility = System.Windows.Visibility.Hidden;
@@ -40,6 +42,16 @@ namespace RAFFLE
                     uiMainWindow = new MainWindow();
                     uiMainWindow.Show();
                     uiMainWindow.Visibility = System.Windows.Visibility.Visible;
+
+                    if (uiUserBoard != null)
+                    {
+                        uiUserBoard.Visibility = System.Windows.Visibility.Hidden;
+                        uiUserBoard = null;
+                    }
+                    uiUserBoard = new UserBoard();
+                    uiUserBoard.Show();
+                    uiUserBoard.WindowState = System.Windows.WindowState.Maximized;
+                    uiUserBoard.Visibility = System.Windows.Visibility.Visible;
                     break;
                 case EventRaiseType.Setting:
                     uiMainWindow.Visibility = System.Windows.Visibility.Hidden;
