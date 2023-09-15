@@ -80,7 +80,7 @@ namespace RAFFLE.UI
             SettingSchema.Location = txtLocation.Text;
             SettingSchema.Description = txtDescription.Text;
 
-            if (getDateTimeFromString(SettingSchema.Time) >= DateTime.Now)
+            if (getDateTimeFromString(SettingSchema.Time) <= DateTime.Now)
             {
                 MsgHelper.ShowMessage(MsgType.Other, "Invalid time");
                 return;

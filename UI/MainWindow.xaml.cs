@@ -106,7 +106,7 @@ namespace RAFFLE.UI
             }
         }
 
-        private void PrintText(string text)
+        private void PrintText(string text, int fontsize)
         {
             // Create a new PrintDocument object
             PrintDocument document = new PrintDocument();
@@ -119,7 +119,7 @@ namespace RAFFLE.UI
                 // This event is triggered for each page that needs to be printed
 
                 // Example: Print some text
-                e.Graphics.DrawString(text, new Font("Arial", 24), System.Drawing.Brushes.Black, e.MarginBounds.Left, e.MarginBounds.Top);
+                e.Graphics.DrawString(text, new Font("Arial", fontsize), System.Drawing.Brushes.Black, e.MarginBounds.Left, e.MarginBounds.Top);
             };
 
             // Start printing the document to the default printer
@@ -179,13 +179,15 @@ namespace RAFFLE.UI
                 lblCurState.Text = SettingSchema.Count.ToString();
                 Random random = new Random();
                 timer.Stop();
-                ResultSchema.WinnerNumber = (int)(SettingSchema.Count * random.NextDouble());
+                ResultSchema.WinnerNumber = (int)(curProgress * random.NextDouble());
                 ResultSchema.WinnerPrice = curProgress * SettingSchema.Price * (1 - SettingSchema.Rate / 100);
                 ResultSchema.AdminPrice = curProgress * SettingSchema.Price * (SettingSchema.Rate / 100);
                 ResultSchema.Img = SettingSchema.Img;
                 ResultSchema.Remain = SettingSchema.Count - curProgress;
                 Builder.RaiseEvent(EventRaiseType.Result);
+                Builder.uiUserBoard.EndState();
                 prgThread.IsIndeterminate = false;
+                PrintText("Winner: " + ResultSchema.WinnerNumber, 30);
                 return;
             }
             if (curProgress < SettingSchema.Count)
@@ -196,7 +198,7 @@ namespace RAFFLE.UI
                     sImpluse = sImpluse.Substring(1);
                     txtImpluse.Text = sImpluse;
                     curProgress++;
-                    PrintText("No: " + curProgress + "\nLocation: " + SettingSchema.Location + "\nDescription: " + SettingSchema.Description);
+                    PrintText("No: " + curProgress + "\nLocation: " + SettingSchema.Location + "\nDescription: " + SettingSchema.Description, 14);
                 }
                 lblCurState.Text = curProgress + " / " + SettingSchema.Count;
             }            

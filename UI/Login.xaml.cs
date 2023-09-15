@@ -30,6 +30,7 @@ namespace RAFFLE.UI
         public Login()
         {
             InitializeComponent();
+            txtUsername.Focus();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)

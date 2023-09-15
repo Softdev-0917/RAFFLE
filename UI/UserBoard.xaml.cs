@@ -28,6 +28,7 @@ namespace RAFFLE.UI
     public partial class UserBoard : UiWindow
     {
         private BitmapImage img = null;
+        DispatcherTimer timer = new DispatcherTimer();
         public UserBoard()
         {
             InitializeComponent();
@@ -41,6 +42,16 @@ namespace RAFFLE.UI
             Img.Source = SettingSchema.Img;
             lblLocation.Text = "Location: " + SettingSchema.Location;
             lblDescription.Text = "Description: " + SettingSchema.Description;
+            prgThread.IsIndeterminate = true;
+            lblWinner.Text = "Winner: None";
+        }
+
+        public void EndState()
+        {
+            timer.Stop();
+            prgThread.IsIndeterminate = false;
+            prgThread.Progress = 100;
+            lblWinner.Text = "Winner: " + ResultSchema.WinnerNumber;            
         }
 
         private DateTime getDateTimeFromString(string dateString)
@@ -65,11 +76,12 @@ namespace RAFFLE.UI
 
         public void Initialze()
         {
+            prgThread.IsIndeterminate = false;
             lblEndTime.Text = "End Time: " + getDateTimeFromString(SettingSchema.Time).ToString();
             lblPrice.Text = "Price: " + SettingSchema.Price;
             lblLocation.Text = "Location: " + SettingSchema.Location;
             lblDescription.Text = "Description: " + SettingSchema.Description;
-            DispatcherTimer timer = new DispatcherTimer();
+            lblWinner.Text = "Winner: None";
             Img.Source = SettingSchema.Img;
             timer.Interval = TimeSpan.FromSeconds(1); // Set the interval to 1 second
             timer.Tick += Timer_Tick; // Set the event handler
