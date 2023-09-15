@@ -75,7 +75,7 @@ namespace RAFFLE.Manager
         {
             SQLiteCommand cmd = new SQLiteCommand();
             cmd = sqliteConn.CreateCommand();
-            string query = String.Format("Insert into tbl_history (time, count, rate, price, winner_number, winner_price, admin_price, remain, location, description, image) values ('{0}', {1}, {2}, {3}, {4}, {5}, {6}, {7}, '{8}', '{9}', @0);", SettingSchema.Time, SettingSchema.Count, SettingSchema.Rate, SettingSchema.Price, ResultSchema.WinnerNumber, ResultSchema.WinnerPrice, ResultSchema.AdminPrice, ResultSchema.Remain, SettingSchema.Location, SettingSchema.Description);
+            string query = String.Format("Insert into tbl_history (time, rate, price, winner_number, winner_price, admin_price, location, description, image) values ('{0}', {1}, {2}, {3}, {4}, {5}, '{6}', '{7}', @0);", SettingSchema.Time, SettingSchema.Rate, SettingSchema.Price, ResultSchema.WinnerNumber, ResultSchema.WinnerPrice, ResultSchema.AdminPrice, SettingSchema.Location, SettingSchema.Description);
             cmd.CommandText = query;
             byte[] bytesImage;
 
@@ -100,15 +100,13 @@ namespace RAFFLE.Manager
             {
                 HistoryEntity historyEntity = new HistoryEntity();
                 historyEntity.Time = reader.GetString(1);
-                historyEntity.Count = reader.GetInt32(2);
-                historyEntity.Rate = reader.GetFloat(3);
-                historyEntity.Price = reader.GetFloat(4);
-                historyEntity.WinnerNumber = reader.GetInt32(6);
-                historyEntity.WinnerPrice = reader.GetFloat(7);
-                historyEntity.AdminPrice = reader.GetFloat(8);
-                historyEntity.Remain = reader.GetInt16(9);
-                historyEntity.Location = reader.GetString(10);
-                historyEntity.Description = reader.GetString(11);
+                historyEntity.Rate = reader.GetFloat(2);
+                historyEntity.Price = reader.GetFloat(3);
+                historyEntity.WinnerNumber = reader.GetInt32(5);
+                historyEntity.WinnerPrice = reader.GetFloat(6);
+                historyEntity.AdminPrice = reader.GetFloat(7);
+                historyEntity.Location = reader.GetString(8);
+                historyEntity.Description = reader.GetString(9);
                 lstHistory.Add(historyEntity);
             }
 

@@ -18,6 +18,7 @@ using Microsoft.Win32;
 using RAFFLE.Utils;
 using RAFFLE.Manager;
 using System.Globalization;
+using Wpf.Ui.Extensions;
 
 namespace RAFFLE.UI
 {

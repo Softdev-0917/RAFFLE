@@ -51,16 +51,6 @@
                 </StackPanel>
             </WrapPanel>
             <WrapPanel>
-                <TextBlock Text="Count: " FontSize="14" Margin="0 15 0 0"/>
-                <WrapPanel Margin="42 10 0 0">
-                    <TextBox Width="210" Text="0" Name="txtCount" />
-                    <StackPanel>
-                        <Button x:Name="btnCountUp" Content="▲" Height="20" FontSize="7" Click="btnCountUp_Click"/>
-                        <Button x:Name="btnCountDown" Content="▼" Height="20" FontSize="7" Click="btnCountDown_Click"/>
-                    </StackPanel>
-                </WrapPanel>
-            </WrapPanel>
-            <WrapPanel>
                 <TextBlock Text="Rate: " FontSize="14" Margin="0 15 0 0"/>
                 <ui:TextBox Width="240" Name="txtRate" Margin="50 10 0 0"/>
             </WrapPanel>

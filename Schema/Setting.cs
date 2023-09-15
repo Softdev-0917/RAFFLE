@@ -11,7 +11,6 @@ namespace RAFFLE.Schema
     public static class SettingSchema
     {
         private static string m_Time;
-        private static int m_Count;
         private static double m_Rate;
         private static double m_Price;
         private static BitmapImage m_Img;
@@ -20,7 +19,6 @@ namespace RAFFLE.Schema
         private static string m_Description;
 
         public static string Time { get => m_Time; set => m_Time = value; }
-        public static int Count { get => m_Count; set => m_Count = value; }
         public static double Rate { get => m_Rate; set => m_Rate = value; }
         public static double Price { get => m_Price; set => m_Price = value; }
         public static BitmapImage Img { get => m_Img; set => m_Img = value; }

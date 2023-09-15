@@ -39,7 +39,6 @@ namespace RAFFLE.UI
         {
             txtTime.SelectedDate = DateTime.Now;
             txtTimePicker.Text = DateTime.Now.Hour + ":" + DateTime.Now.Minute;
-            txtCount.Text = "1";
             txtPrice.Text = "1";
             txtRate.Text = "25";
 
@@ -75,7 +74,6 @@ namespace RAFFLE.UI
         {
             SettingSchema.Time = txtTime.SelectedDate.Value.Date.ToShortDateString() + txtTimePicker.Text;
             SettingSchema.Rate = Convert.ToDouble(txtRate.Text);
-            SettingSchema.Count = Convert.ToInt16(txtCount.Text);
             SettingSchema.Price = Convert.ToInt16(txtPrice.Text);
             SettingSchema.Location = txtLocation.Text;
             SettingSchema.Description = txtDescription.Text;
@@ -88,11 +86,6 @@ namespace RAFFLE.UI
             if (imgPath == null)
             {
                 MsgHelper.ShowMessage(MsgType.Other, "Invalid image");
-                return;
-            }
-            if (SettingSchema.Count <= 0)
-            {
-                MsgHelper.ShowMessage(MsgType.Other, "Invalid count");
                 return;
             }
             if (SettingSchema.Price <= 0 || SettingSchema.Price > 5)
@@ -172,21 +165,6 @@ namespace RAFFLE.UI
         {
             lblMinute.Text = Convert.ToInt16(minuteSlider.Value) + "M:";
         }
-
-        private void btnCountUp_Click(object sender, RoutedEventArgs e)
-        {
-            // Increment the value when the up button is clicked
-            int currentValue = int.Parse(txtCount.Text);
-            txtCount.Text = (currentValue + 1).ToString();
-        }
-
-        private void btnCountDown_Click(object sender, RoutedEventArgs e)
-        {
-            // Decrement the value when the down button is clicked
-            int currentValue = int.Parse(txtCount.Text);
-            txtCount.Text = (currentValue - 1).ToString();
-        }
-
 
         private void txtTimePicker_MouseEnter(object sender, MouseEventArgs e)
         {
