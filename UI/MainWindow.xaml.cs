@@ -112,7 +112,7 @@ namespace RAFFLE.UI
             // Set the document name and print handler
             document.DocumentName = "Printing Test";
             document.DefaultPageSettings.PaperSize = new PaperSize("Custom", cmToPixels(3), cmToPixels(10));
-            document.DefaultPageSettings.Margins = new Margins(cmToPixels(0.5f), cmToPixels(0.5f), cmToPixels(0.5f), cmToPixels(0.5f));
+            document.DefaultPageSettings.Margins = new Margins(cmToPixels(1f), cmToPixels(1f), cmToPixels(1f), cmToPixels(1f));
             
             document.PrintPage += (sender, e) =>
             {
@@ -120,10 +120,10 @@ namespace RAFFLE.UI
                 // This event is triggered for each page that needs to be printed
 
                 SizeF textSize = e.Graphics.MeasureString(text, new Font("Arial", fontsize));
-                float centerX = e.MarginBounds.Left + (e.MarginBounds.Width - textSize.Width) / 2;
-                float centerY = e.MarginBounds.Top + (e.MarginBounds.Height - textSize.Height) / 2;
-                e.Graphics.DrawString(text, new Font("Arial", fontsize), System.Drawing.Brushes.Black, centerX, centerY);
-                //e.Graphics.DrawString(text, new Font("Arial", fontsize), System.Drawing.Brushes.Black, e.MarginBounds.Left, e.MarginBounds.Top);
+                //float centerX = e.MarginBounds.Left + (e.MarginBounds.Width - textSize.Width) / 2;
+                //float centerY = e.MarginBounds.Top + (e.MarginBounds.Height - textSize.Height) / 2;
+                //e.Graphics.DrawString(text, new Font("Arial", fontsize), System.Drawing.Brushes.Black, centerX, centerY);
+                e.Graphics.DrawString(text, new Font("Arial", fontsize), System.Drawing.Brushes.Black, e.MarginBounds.Left, e.MarginBounds.Top);
             };
 
             // Start printing the document to the default printer
@@ -196,13 +196,17 @@ namespace RAFFLE.UI
                 if (ResultSchema.WinnerNumber == 0)
                     ResultSchema.WinnerNumber = (int)(curProgress * random.NextDouble());
 
-                ResultSchema.WinnerPrice = curProgress * SettingSchema.Price * (1 - SettingSchema.Rate / 100);
                 ResultSchema.AdminPrice = curProgress * SettingSchema.Price * (SettingSchema.Rate / 100);
                 ResultSchema.Img = SettingSchema.Img;
+                if (curProgress == 0)
+                {
+                    Builder.RaiseEvent(EventRaiseType.Result);
+                    Builder.uiUserBoard.EndState();
+                }
                 Builder.RaiseEvent(EventRaiseType.Result);
                 Builder.uiUserBoard.EndState();
                 prgThread.IsIndeterminate = false;
-                PrintText("Winner\n" + ResultSchema.WinnerNumber + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 50);
+                PrintText("Winner\n" + ResultSchema.WinnerNumber + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 30);
                 return;
             }
                 // Print text
@@ -211,7 +215,8 @@ namespace RAFFLE.UI
                     sImpluse = sImpluse.Substring(1);
                     txtImpluse.Text = sImpluse;
                     curProgress++;
-                    PrintText(curProgress + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 30);
+                    ResultSchema.WinnerPrice = curProgress * SettingSchema.Price * (1 - SettingSchema.Rate / 100);
+                PrintText(curProgress + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 14);
                 }
                 lblCurState.Text = "Current Number: " + curProgress.ToString();
 

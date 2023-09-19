@@ -50,6 +50,12 @@ namespace RAFFLE.UI
         {
             timer.Stop();
             prgThread.IsIndeterminate = false;
+            if (ResultSchema.WinnerPrice == 0)
+            {
+                prgThread.Progress = 100;
+                lblWinner.Text = "Winner: None";
+                return;
+            }
             prgThread.Progress = 100;
             lblWinner.Text = "Winner: " + ResultSchema.WinnerNumber;            
         }
@@ -82,6 +88,7 @@ namespace RAFFLE.UI
             lblLocation.Text = "Location: " + SettingSchema.Location;
             lblDescription.Text = "Description: " + SettingSchema.Description;
             lblWinner.Text = "Winner: None";
+            lblWinnerPrice.Text = "WinnerPrice: 0";
             Img.Source = SettingSchema.Img;
             timer.Interval = TimeSpan.FromSeconds(1); // Set the interval to 1 second
             timer.Tick += Timer_Tick; // Set the event handler
@@ -91,6 +98,7 @@ namespace RAFFLE.UI
         private void Timer_Tick(object sender, EventArgs e)
         {
             lblCurTime.Text = "Current Time: " + DateTime.Now.ToString();
+            lblWinnerPrice.Text = "WinnerPrice: " + ResultSchema.WinnerPrice;
         }
     }
 }

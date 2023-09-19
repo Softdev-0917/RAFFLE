@@ -21,27 +21,32 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="50">
-            <TextBlock Text="Current Time: " Name="lblCurTime" FontSize="50" Margin="0 30 0 0">
+            <TextBlock Text="Current Time: " Name="lblCurTime" FontSize="40" Margin="0 30 0 0">
                 <TextBlock.Effect>
                     <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
                 </TextBlock.Effect>
             </TextBlock>
-            <TextBlock Text="End Time: " Name="lblEndTime" FontSize="50" Margin="0 30 0 0">
+            <TextBlock Text="End Time: " Name="lblEndTime" FontSize="40" Margin="0 30 0 0">
                 <TextBlock.Effect>
                     <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
                 </TextBlock.Effect>
             </TextBlock>
-            <TextBlock Text="Price: " Name="lblPrice" FontSize="50" Margin="0 30 0 0">
+            <TextBlock Text="Price: " Name="lblPrice" FontSize="40" Margin="0 30 0 0">
                 <TextBlock.Effect>
                     <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
                 </TextBlock.Effect>
             </TextBlock>
-            <TextBlock Text="Location: " Name="lblLocation" FontSize="50" Margin="0 30 0 0">
+            <TextBlock Text="Location: " Name="lblLocation" FontSize="40" Margin="0 30 0 0">
                 <TextBlock.Effect>
                     <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
                 </TextBlock.Effect>
             </TextBlock>
-            <TextBlock Text="Description: " Name="lblDescription" FontSize="50" Margin="0 30 0 0">
+            <TextBlock Text="Description: " Name="lblDescription" FontSize="40" Margin="0 30 0 0">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
+                </TextBlock.Effect>
+            </TextBlock>
+            <TextBlock Text="WinnerPrice: " Name="lblWinnerPrice" FontSize="40" Margin="0 30 0 0">
                 <TextBlock.Effect>
                     <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
                 </TextBlock.Effect>

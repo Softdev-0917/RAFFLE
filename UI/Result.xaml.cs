@@ -35,9 +35,15 @@ namespace RAFFLE.UI
         private void Initialize()
         {
             //lblAdminPrice.Text = "Admin Price: " + Math.Round(ResultSchema.AdminPrice, 2).ToString();
+            ResImg.Source = ResultSchema.Img;
+            if (ResultSchema.WinnerNumber == 0)
+            {
+                lblWinnerNumber.Text = "Winner: None";
+                lblWinnerPrice.Text = "Price: None";
+                return;
+            }
             lblWinnerNumber.Text = "Winner: " + ResultSchema.WinnerNumber.ToString();
             lblWinnerPrice.Text = "Price: " + Math.Round(ResultSchema.WinnerPrice, 2).ToString();
-            ResImg.Source = ResultSchema.Img;
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)

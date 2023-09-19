@@ -68,6 +68,10 @@ namespace RAFFLE
                     uiHistory.Visibility = System.Windows.Visibility.Visible;
                     break;
                 case EventRaiseType.Result:
+                    if (uiMainWindow == null)
+                    {
+                        uiMainWindow = new MainWindow ();
+                    }
                     uiMainWindow.Visibility = System.Windows.Visibility.Hidden;
                     uiMainWindow = null;
                     uiResult = new Result();
