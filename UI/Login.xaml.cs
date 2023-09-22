@@ -51,6 +51,7 @@ namespace RAFFLE.UI
                     FontSize = 20,
                     Text = "Invalid PIN..."
                 };
+
                 messageBox.Height = 170;
                 messageBox.Topmost = false;
                 messageBox.ButtonRightName = "Exit";
@@ -105,6 +106,11 @@ namespace RAFFLE.UI
                     Builder.RaiseEvent(EventRaiseType.LoginSuccess);
                 }
             }
+        }
+
+        private void btnSetting_Click(object sender, RoutedEventArgs e)
+        {
+            Builder.RaiseEvent(EventRaiseType.AccountSetting);
         }
     }
 }

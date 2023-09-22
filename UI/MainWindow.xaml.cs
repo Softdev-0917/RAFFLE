@@ -23,6 +23,11 @@ using System.Drawing.Printing;
 using System.Drawing;
 using System.Globalization;
 using Wpf.Ui.Extensions;
+using Image = System.Drawing.Image;
+using System.Windows.Media.Media3D;
+using System.Windows.Interop;
+using System.IO;
+using RAFFLE.Manager;
 
 namespace RAFFLE.UI
 {
@@ -34,8 +39,7 @@ namespace RAFFLE.UI
         private bool bThreadStatus = false;
 
         private DispatcherTimer timer = new DispatcherTimer();
-        private string sImpluse;
-        private int curProgress = 0;
+        //private string sImpluse;
         public MainWindow()
         {
             InitializeComponent();
@@ -49,7 +53,7 @@ namespace RAFFLE.UI
             Img.Source = SettingSchema.Img;
 
             bThreadStatus = false;
-            timer.Interval = TimeSpan.FromSeconds(1); // Set the interval to 1 second
+            timer.Interval = TimeSpan.FromSeconds(3); // Set the interval to 1 second
             timer.Tick += Timer_Tick; // Set the event handler
             prgThread.IsIndeterminate = false;
             Update();
@@ -60,6 +64,7 @@ namespace RAFFLE.UI
             lblEndTime.Text = "End Time: " + getDateTimeFromString(SettingSchema.Time).ToString();
             lblPrice.Text = "Price: " + SettingSchema.Price.ToString();
             Img.Source = SettingSchema.Img;
+            
         }
 
         private void Update()
@@ -104,45 +109,6 @@ namespace RAFFLE.UI
             }
         }
 
-        private void PrintText(string text, int fontsize)
-        {
-            // Create a new PrintDocument object
-            PrintDocument document = new PrintDocument();
-
-            // Set the document name and print handler
-            document.DocumentName = "Printing Test";
-            document.DefaultPageSettings.PaperSize = new PaperSize("Custom", cmToPixels(3), cmToPixels(10));
-            document.DefaultPageSettings.Margins = new Margins(cmToPixels(1f), cmToPixels(1f), cmToPixels(1f), cmToPixels(1f));
-            
-            document.PrintPage += (sender, e) =>
-            {
-                // Add your custom printing logic here
-                // This event is triggered for each page that needs to be printed
-
-                SizeF textSize = e.Graphics.MeasureString(text, new Font("Arial", fontsize));
-                //float centerX = e.MarginBounds.Left + (e.MarginBounds.Width - textSize.Width) / 2;
-                //float centerY = e.MarginBounds.Top + (e.MarginBounds.Height - textSize.Height) / 2;
-                //e.Graphics.DrawString(text, new Font("Arial", fontsize), System.Drawing.Brushes.Black, centerX, centerY);
-                e.Graphics.DrawString(text, new Font("Arial", fontsize), System.Drawing.Brushes.Black, e.MarginBounds.Left, e.MarginBounds.Top);
-            };
-
-            // Start printing the document to the default printer
-            document.Print();
-            document.EndPrint += (sender, e) =>
-            {
-            };
-
-        }
-
-        // Helper function to convert centimeters to pixels
-        private int cmToPixels(float cm)
-        {
-            const float inchToCm = 2.54f;
-            const int dpi = 96; // Assuming 96 DPI
-
-            return (int)(cm * dpi / inchToCm);
-        }
-
         private DateTime getDateTimeFromString(string dateString)
         {
             string inputFormat = "M/d/yyyyHH:mm";
@@ -185,20 +151,20 @@ namespace RAFFLE.UI
         {
             DateTime curTime = DateTime.Now;
             DateTime endTime = getDateTimeFromString(SettingSchema.Time);
-            txtImpluse.Focus();
+            //txtImpluse.Focus();
             if (curTime >= endTime) //  && curProgress <= SettingSchema.Count
             {
                 // Code to be executed at each interval
                 Random random = new Random();
                 timer.Stop();
-                ResultSchema.WinnerNumber = (int)(curProgress * random.NextDouble());
+                ResultSchema.WinnerNumber = (int)(ThreadMgr.curProgress * random.NextDouble());
                 
                 if (ResultSchema.WinnerNumber == 0)
-                    ResultSchema.WinnerNumber = (int)(curProgress * random.NextDouble());
+                    ResultSchema.WinnerNumber = (int)(ThreadMgr.curProgress * random.NextDouble());
 
-                ResultSchema.AdminPrice = curProgress * SettingSchema.Price * (SettingSchema.Rate / 100);
+                ResultSchema.AdminPrice = ThreadMgr.curProgress * SettingSchema.Price * (SettingSchema.Rate / 100);
                 ResultSchema.Img = SettingSchema.Img;
-                if (curProgress == 0)
+                if (ThreadMgr.curProgress == 0)
                 {
                     Builder.RaiseEvent(EventRaiseType.Result);
                     Builder.uiUserBoard.EndState();
@@ -206,19 +172,19 @@ namespace RAFFLE.UI
                 Builder.RaiseEvent(EventRaiseType.Result);
                 Builder.uiUserBoard.EndState();
                 prgThread.IsIndeterminate = false;
-                PrintText("Winner\n" + ResultSchema.WinnerNumber + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 30);
+                ThreadMgr.PrintText("Winner\n" + ResultSchema.WinnerNumber + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 14);
                 return;
             }
                 // Print text
-                if (sImpluse != "" && sImpluse != null && sImpluse.Length > 0)
-                {
-                    sImpluse = sImpluse.Substring(1);
-                    txtImpluse.Text = sImpluse;
-                    curProgress++;
-                    ResultSchema.WinnerPrice = curProgress * SettingSchema.Price * (1 - SettingSchema.Rate / 100);
-                PrintText(curProgress + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 14);
-                }
-                lblCurState.Text = "Current Number: " + curProgress.ToString();
+                //if (sImpluse != "" && sImpluse != null && sImpluse.Length > 0)
+                //{
+                    //sImpluse = sImpluse.Substring(1);
+                    //txtImpluse.Text = sImpluse;
+                    //curProgress++;
+                    //ResultSchema.WinnerPrice = curProgress * SettingSchema.Price * (1 - SettingSchema.Rate / 100);
+                    //PrintText(curProgress + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 14);
+                //}
+            lblCurState.Text = "Current Number: " + ThreadMgr.curProgress.ToString();
 
             lblCurTime.Text = "Current Time: " + DateTime.Now.ToString();
             prgThread.IsIndeterminate = true;
@@ -231,11 +197,11 @@ namespace RAFFLE.UI
             Builder.RaiseEvent(EventRaiseType.History);
         }
 
-        private void txtImpluse_KeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = true;
-            txtImpluse.Text += "+";
-            sImpluse = txtImpluse.Text;
-        }
+        //private void txtImpluse_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    e.Handled = true;
+        //    txtImpluse.Text += "+";
+        //    sImpluse = txtImpluse.Text;
+        //}
     }
 }

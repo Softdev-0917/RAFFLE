@@ -16,6 +16,7 @@ namespace RAFFLE
         public static Result uiResult;
         public static Login uiLogin;
         public static UserBoard uiUserBoard;
+        public static AccountSetting uiAccountSetting;
 
         public static void RaiseEvent(EventRaiseType type)
         {
@@ -35,6 +36,30 @@ namespace RAFFLE
                     uiMainWindow.Show();
                     uiMainWindow.Visibility = System.Windows.Visibility.Visible;
 
+                    break;
+                case EventRaiseType.AccountSetting:
+                    uiLogin.Visibility = System.Windows.Visibility.Hidden;
+                    if (uiLogin != null)
+                    {
+                        uiLogin = null;
+                    }
+                    if (uiAccountSetting == null)
+                    {
+                        uiAccountSetting = new AccountSetting();
+                    }
+                    uiAccountSetting.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case EventRaiseType.AccountSetting_Closed:
+                    uiAccountSetting.Visibility = System.Windows.Visibility.Hidden;
+                    if (uiAccountSetting != null)
+                    {
+                        uiAccountSetting = null;
+                    }
+                    if (uiLogin == null)
+                    {
+                        uiLogin = new Login();
+                    }
+                    uiLogin.Visibility = System.Windows.Visibility.Visible;
                     break;
                 case EventRaiseType.MainWindow:
                     uiSetting.Visibility = System.Windows.Visibility.Hidden;
@@ -103,6 +128,8 @@ namespace RAFFLE
     {
         Init = 0x0001,
         Login = 0x0002,
+        AccountSetting = 0x0010,
+        AccountSetting_Closed = 0x0011,
         LoginSuccess = 0x0003,
         MainWindow = 0x0101,
         Setting = 0x0102,

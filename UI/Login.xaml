@@ -25,9 +25,12 @@
         <StackPanel Grid.Row="1">
             <ui:TextBox Width="200" PlaceholderText="User Name" Name="txtUsername" Margin="5"/>
             <ui:PasswordBox Width="200" PlaceholderText="PIN" Name="txtPassword" KeyUp="txtPassword_KeyUp" Margin="5"/>
-        </StackPanel>            
+        </StackPanel>
+        <WrapPanel Grid.Column="1" Grid.Row="2" Margin="200 25 100 10">
+            <ui:Button Appearance="Success" Name="btnLogin" Content="ACCESS" Click="btnLogin_Click"/>
+            <ui:Button Appearance="Caution" Name="btnSetting" Content="Setting" Margin="50 0 0 0" Click="btnSetting_Click"/>
+        </WrapPanel>
         
-        <ui:Button Appearance="Success" Name="btnLogin" Content="ACCESS" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Click="btnLogin_Click"/>
         <ui:Snackbar Title="Error" Grid.Row="2" MaxWidth="200" Appearance="Secondary" Icon="PuzzleCube24" Visibility="Visible" Message="Invalid PIN" Timeout="5000" x:Name="RootSnackBar" Margin="30 50 30 20"/>
     </Grid>
 </ui:UiWindow>

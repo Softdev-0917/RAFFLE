@@ -1,4 +1,5 @@
 ﻿using RAFFLE.Schema;
+using RAFFLE.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations.Model;
@@ -68,7 +69,47 @@ namespace RAFFLE.Manager
             {
                 pin = sqlite_reader.GetString(0);
             }
+            if (pin == "")
+            {
+                pin = null;
+            }
             return pin;
+        }
+
+        public static void UpdatePIN(string username, string new_pin, string new_username)
+        {
+            try
+            {
+                SQLiteCommand sqlite_cmd;
+                SQLiteDataReader sqlite_reader;
+                sqlite_cmd = sqliteConn.CreateCommand();
+                sqlite_cmd.CommandText = String.Format("update tbl_user set password = '{0}', username = '{1}' where username = '{2}'", new_pin, new_username, username);
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MsgHelper.ShowMessage(MsgType.Other, "Faild update username and password");
+            }
+        }
+
+        public static int validateUsername(string username)
+        {
+            int result = 0;
+            SQLiteCommand sqlite_cmd;
+            SQLiteDataReader sqlite_reader;
+            sqlite_cmd = sqliteConn.CreateCommand();
+            sqlite_cmd.CommandText = String.Format("select count(username) from tbl_user where username = '{0}'", username);
+            sqlite_reader = sqlite_cmd.ExecuteReader();
+            while (sqlite_reader.Read())
+            {
+                result = sqlite_reader.GetInt16(0);
+            }
+            if (result == 0)
+            {
+                result = -1;
+            }
+
+            return result;
         }
 
         public static void InsertHistory()

@@ -27,12 +27,12 @@
                 <ui:Button Appearance="Caution" Content="History" VerticalAlignment="Top" FontSize="14" Margin="10 20 0 0" Width="100" Name="btnHistory" Click="btnHistory_Click"/>
                 <ui:Button Appearance="Danger" Content="Exit" VerticalAlignment="Top" FontSize="14" Margin="30 20 0 0" Width="100" Name="btnExit" Click="btnExit_Click"/>
                 <!--<ProgressBar Width="230" Margin="10" Height="30" Name="prgThread"/>-->
-                <StackPanel KeyDown="txtImpluse_KeyDown" Margin="10">
-                    <ui:TextBox PlaceholderText="Billing Status" Name="txtImpluse" FontSize="14" Width="218" Margin="10"/>
+                <StackPanel Margin="60">
+                    <!--<ui:TextBox PlaceholderText="" Name="txtImpluse" FontSize="14" Width="218" Margin="10" Foreground="#202020"/>-->
                     <ui:ProgressRing IsIndeterminate="True" Progress="80" Name="prgThread" Margin="10"/>
                     <DockPanel>
                         <TextBlock Text="Current Number: 0" Name="lblCurState" FontSize="14" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </DockPanel>                    
+                    </DockPanel>
                 </StackPanel>
             </WrapPanel>
         </GroupBox>

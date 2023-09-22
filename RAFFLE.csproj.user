@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="UI\AccountSetting.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="UI\UserBoard.xaml">
       <SubType>Designer</SubType>
     </Page>

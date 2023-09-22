@@ -61,11 +61,10 @@ namespace RAFFLE.UI
             if (DateTime.TryParseExact(dateString, inputFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
             {
                 formattedDateTime = dateTime.ToString(outputFormat);
-                //Console.WriteLine(formattedDateTime);
             }
             else
             {
-                //Console.WriteLine("Invalid date format");
+
             }
             return Convert.ToDateTime(formattedDateTime);
         }
@@ -114,6 +113,7 @@ namespace RAFFLE.UI
             // close setting dialog
             Builder.RaiseEvent(EventRaiseType.MainWindow);
             Builder.uiMainWindow.UpdateState();
+            Builder.uiMainWindow.Focus();
 
         }
 
@@ -189,7 +189,6 @@ namespace RAFFLE.UI
         private void txtTimePicker_MouseLeave(object sender, MouseEventArgs e)
         {
         }
-
 
         private void btnTimeCancel_Click(object sender, RoutedEventArgs e)
         {

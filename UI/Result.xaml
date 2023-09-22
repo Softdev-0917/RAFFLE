@@ -31,16 +31,11 @@
                     <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
                 </TextBlock.Effect>
             </TextBlock>
-            <TextBlock Text="Price: " FontWeight="Bold" FontSize="20" Name="lblWinnerPrice" Margin="10">
+            <TextBlock Text="Prize: " FontWeight="Bold" FontSize="20" Name="lblWinnerPrice" Margin="10">
                 <TextBlock.Effect>
                     <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
                 </TextBlock.Effect>
             </TextBlock>
-            <!--<TextBlock Text="Admin Price: " FontSize="20" FontWeight="Bold" Name="lblAdminPrice" Margin="10">
-                <TextBlock.Effect>
-                    <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
-                </TextBlock.Effect>
-            </TextBlock>-->
         </StackPanel>
         <WrapPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="70 20 20 20">
             <ui:Button Appearance="Primary" Content="OK" Width="100" Margin="20 0 0 0" Name="btnOK" Click="btnOK_Click"/>
