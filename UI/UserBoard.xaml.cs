@@ -22,44 +22,39 @@ using System.Windows.Threading;
 
 namespace RAFFLE.UI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class UserBoard : UiWindow
     {
         private BitmapImage img = null;
         private string sImpluse;
-        DispatcherTimer timer = new DispatcherTimer();
+        DispatcherTimer timer_raffle = new DispatcherTimer();
+        DispatcherTimer timer_clock = new DispatcherTimer();
+        private int ClockCount;
         public UserBoard()
         {
             InitializeComponent();
             Initialze();
         }
-
         public void Update()
         {
-            timer.Start();
+            timer_raffle.Start();
             lblEndTime.Text = "End Time: " + getDateTimeFromString(SettingSchema.Time).ToString();
             lblPrice.Text = "Price: " + SettingSchema.Price;
             Img.Source = SettingSchema.Img;
             lblLocation.Text = "" + SettingSchema.Location;
             lblDescription.Text = "" + SettingSchema.Description;
             prgThread.IsIndeterminate = true;
-            //lblWinner.Text = "Winner: None";
         }
 
         public void EndState()
         {
-            timer.Stop();
+            timer_raffle.Stop();
             prgThread.IsIndeterminate = false;
             if (ResultSchema.WinnerPrice == 0)
             {
                 prgThread.Progress = 100;
-                //lblWinner.Text = "Winner: None";
                 return;
             }
-            prgThread.Progress = 100;
-            //lblWinner.Text = "Winner: " + ResultSchema.WinnerNumber;            
+            prgThread.Progress = 100;   
         }
 
         private DateTime getDateTimeFromString(string dateString)
@@ -73,11 +68,9 @@ namespace RAFFLE.UI
             if (DateTime.TryParseExact(dateString, inputFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
             {
                 formattedDateTime = dateTime.ToString(outputFormat);
-                //Console.WriteLine(formattedDateTime);
             }
             else
             {
-                //Console.WriteLine("Invalid date format");
             }
             return Convert.ToDateTime(formattedDateTime);
         }
@@ -89,37 +82,69 @@ namespace RAFFLE.UI
             lblPrice.Text = "Price: " + SettingSchema.Price;
             lblLocation.Text = "Location: " + SettingSchema.Location;
             lblDescription.Text = "Description: " + SettingSchema.Description;
-            //lblWinner.Text = "Winner: None";
-            lblWinnerPrice.Text = "Prize: 0";
+            lblWinnerPrice.Text = "Winner Prize: 0";
             Img.Source = SettingSchema.Img;
-            timer.Interval = TimeSpan.FromSeconds(1); // Set the interval to 1 second
-            timer.Tick += Timer_Tick; // Set the event handler
-        }
+            timer_raffle.Interval = TimeSpan.FromSeconds(3); // Set the interval to 1 second
+            timer_raffle.Tick += Timer_Tick; // Set the event handler
+            ClockCount = 3;
+            lblTitle.Text = ClockCount.ToString();
 
-        private void Timer_Tick(object sender, EventArgs e)
+            timer_clock.Interval = TimeSpan.FromSeconds(1);
+            timer_clock.Tick += TimerClock_Tick;
+            timer_clock.Start();
+        }
+        private void TimerClock_Tick(object sender, EventArgs e)
         {
             lblCurTime.Text = "Current Time: " + DateTime.Now.ToString();
-            lblWinnerPrice.Text = "Prize: " + ResultSchema.WinnerPrice;
+            if (ClockCount > 0)
+            {
+                ClockCount--;
+                lblTitle.Text = ClockCount.ToString();
+            } else if (ClockCount == 0)
+            {
+                ClockCount--;
+                lblTitle.Text = "Started!";
+            } else
+            {
+                lblTitle.Text = "";
+            }
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            lblWinnerPrice.Text = "Winner Prize: " + ResultSchema.WinnerPrice;
             txtImpluse.Focus();
             if (sImpluse != "" && sImpluse != null && sImpluse.Length > 0)
             {
                 txtImpluse.Text = sImpluse;
                 sImpluse = sImpluse.Substring(1);
-                //txtImpluse.Text = sImpluse;
+                txtImpluse.Text = sImpluse;
                 ThreadMgr.curProgress++;
                 ResultSchema.WinnerPrice = ThreadMgr.curProgress * SettingSchema.Price * (1 - SettingSchema.Rate / 100);
-                ThreadMgr.PrintText(ThreadMgr.curProgress + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 14);
+                ThreadMgr.PrintText(ThreadMgr.curProgress + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\n" + SettingSchema.Location + "\n" + SettingSchema.Description, 14);
             }
         }
 
-        private void txtImpluse_KeyDown(object sender, KeyEventArgs e)
+        private void txtImpluse_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = true;
-            if (e.Key == Key.NumPad9)
+            char typedChar = e.Text[0];
+            if (typedChar == '9')
             {
                 txtImpluse.Text += "+";
                 sImpluse = txtImpluse.Text;
             }
         }
+
+        //private void txtImpluse_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    e.Handled = true;
+
+        //    //int ascii = KeyInterop.VirtualKeyFromKey(e.Key);
+        //    if (e.Key.ToString() == "9")
+        //    {
+        //        txtImpluse.Text += "+";
+        //        sImpluse = txtImpluse.Text;
+        //    }
+        //}
     }
 }

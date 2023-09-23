@@ -132,18 +132,20 @@ namespace RAFFLE.UI
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-
             if (!bThreadStatus)
             {
                 timer.Start();
-                bThreadStatus = !bThreadStatus;
+                ResultSchema.Init();
+                Builder.RaiseEvent(EventRaiseType.UserBoard);
                 Builder.uiUserBoard.Update();
             }
             else
             {
                 timer.Stop();
-                bThreadStatus = !bThreadStatus;
+                timer.Tick -= Timer_Tick;
+                Builder.RaiseEvent(EventRaiseType.UserBoard_Closed);
             }
+            bThreadStatus = !bThreadStatus;
             Update();
         }
 
@@ -172,7 +174,7 @@ namespace RAFFLE.UI
                 Builder.RaiseEvent(EventRaiseType.Result);
                 Builder.uiUserBoard.EndState();
                 prgThread.IsIndeterminate = false;
-                ThreadMgr.PrintText("Winner\n" + ResultSchema.WinnerNumber + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString(), 14);
+                ThreadMgr.PrintText("Winner\n" + ResultSchema.WinnerNumber + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\n" + SettingSchema.Location + "\n" + SettingSchema.Description, 14);
                 return;
             }
                 // Print text

@@ -18,5 +18,11 @@ namespace RAFFLE.Schema
         public static double WinnerPrice { get => m_WinnerPrice; set => m_WinnerPrice = value; }
         public static double AdminPrice { get => m_AdminPrice; set => m_AdminPrice = value; }
         public static BitmapImage Img { get => m_Img; set => m_Img = value; }
+        public static void Init()
+        {
+            m_WinnerNumber = 0;
+            m_WinnerPrice = 0;
+            m_AdminPrice = 0;
+        }
     }
 }

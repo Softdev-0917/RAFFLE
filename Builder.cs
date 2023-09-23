@@ -68,15 +68,30 @@ namespace RAFFLE
                     uiMainWindow.Show();
                     uiMainWindow.Visibility = System.Windows.Visibility.Visible;
 
-                    if (uiUserBoard != null)
+                    //if (uiUserBoard != null)
+                    //{
+                    //    uiUserBoard.Visibility = System.Windows.Visibility.Hidden;
+                    //    uiUserBoard = null;
+                    //}
+                    //uiUserBoard = new UserBoard();
+                    //uiUserBoard.Show();
+                    break;
+                case EventRaiseType.UserBoard:
+                    if (uiUserBoard == null)
                     {
-                        uiUserBoard.Visibility = System.Windows.Visibility.Hidden;
-                        uiUserBoard = null;
+                        uiUserBoard = new UserBoard();
                     }
-                    uiUserBoard = new UserBoard();
                     uiUserBoard.Show();
                     uiUserBoard.WindowState = System.Windows.WindowState.Maximized;
                     uiUserBoard.Visibility = System.Windows.Visibility.Visible;
+
+                    break;
+                case EventRaiseType.UserBoard_Closed:
+                    uiUserBoard.Visibility = System.Windows.Visibility.Hidden;
+                    if (uiUserBoard != null)
+                    {
+                        uiUserBoard = null;
+                    }
                     break;
                 case EventRaiseType.Setting:
                     uiMainWindow.Visibility = System.Windows.Visibility.Hidden;
@@ -132,6 +147,8 @@ namespace RAFFLE
         AccountSetting_Closed = 0x0011,
         LoginSuccess = 0x0003,
         MainWindow = 0x0101,
+        UserBoard = 0x0111,
+        UserBoard_Closed = 0x0112,
         Setting = 0x0102,
         History = 0x0103,
         Result = 0x0104,

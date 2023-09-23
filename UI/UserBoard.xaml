@@ -20,6 +20,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <TextBlock Text="" Name="lblTitle" FontSize="50" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="600 0 0 0"/>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Margin="50">
             <TextBlock Text="Current Time: " Name="lblCurTime" FontSize="36" Margin="0 30 0 0">
                 <TextBlock.Effect>
@@ -46,18 +47,19 @@
                     <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
                 </TextBlock.Effect>
             </TextBlock>
-            <TextBlock Text="Prize: " Name="lblWinnerPrice" FontSize="36" Margin="0 30 0 0">
+            <TextBlock Text="Winner Prize: " Name="lblWinnerPrice" FontSize="36" Margin="0 30 0 0">
                 <TextBlock.Effect>
                     <DropShadowEffect ShadowDepth="0" Color="Red" Opacity="1" BlurRadius="5" />
                 </TextBlock.Effect>
             </TextBlock>
-            <DockPanel KeyDown="txtImpluse_KeyDown">
-                <ui:TextBox PlaceholderText="" Name="txtImpluse" FontSize="36" Width="950" Margin="10"/>
-            </DockPanel>
             <DockPanel Margin="0 0 0 0">
                 <ui:ProgressRing IsIndeterminate="False" Progress="0" Name="prgThread" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="250"/>
             </DockPanel>
         </StackPanel>
+        <DockPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--KeyDown="txtImpluse_KeyDown"-->
+            <ui:TextBox PlaceholderText="" Name="txtImpluse" FontSize="36" Width="500" Margin="10" PreviewTextInput="txtImpluse_PreviewTextInput"/>
+        </DockPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="50">
             <Image Name="Img" Stretch="Fill" Height="650" Width="600"/>
             <!--<DockPanel Width="600">
