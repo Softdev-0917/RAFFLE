@@ -84,7 +84,7 @@ namespace RAFFLE.UI
             lblDescription.Text = "Description: " + SettingSchema.Description;
             lblWinnerPrice.Text = "Winner Prize: 0";
             Img.Source = SettingSchema.Img;
-            timer_raffle.Interval = TimeSpan.FromSeconds(3); // Set the interval to 1 second
+            timer_raffle.Interval = TimeSpan.FromSeconds(ThreadMgr.timerSpc); // Set the interval to 1 second
             timer_raffle.Tick += Timer_Tick; // Set the event handler
             ClockCount = 3;
             lblTitle.Text = ClockCount.ToString();
@@ -115,12 +115,12 @@ namespace RAFFLE.UI
             txtImpluse.Focus();
             if (sImpluse != "" && sImpluse != null && sImpluse.Length > 0)
             {
+                ResultSchema.WinnerPrice = ThreadMgr.curProgress * SettingSchema.Price * (1 - SettingSchema.Rate / 100);
+                ThreadMgr.PrintText(ThreadMgr.curProgress + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\n" + SettingSchema.Location + "\n" + SettingSchema.Description, 14);
                 txtImpluse.Text = sImpluse;
                 sImpluse = sImpluse.Substring(1);
                 txtImpluse.Text = sImpluse;
                 ThreadMgr.curProgress++;
-                ResultSchema.WinnerPrice = ThreadMgr.curProgress * SettingSchema.Price * (1 - SettingSchema.Rate / 100);
-                ThreadMgr.PrintText(ThreadMgr.curProgress + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\n" + SettingSchema.Location + "\n" + SettingSchema.Description, 14);
             }
         }
 

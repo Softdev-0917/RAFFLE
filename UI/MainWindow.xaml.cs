@@ -53,7 +53,7 @@ namespace RAFFLE.UI
             Img.Source = SettingSchema.Img;
 
             bThreadStatus = false;
-            timer.Interval = TimeSpan.FromSeconds(3); // Set the interval to 1 second
+            timer.Interval = TimeSpan.FromSeconds(ThreadMgr.timerSpc); // Set the interval to 1 second
             timer.Tick += Timer_Tick; // Set the event handler
             prgThread.IsIndeterminate = false;
             Update();
@@ -174,7 +174,7 @@ namespace RAFFLE.UI
                 Builder.RaiseEvent(EventRaiseType.Result);
                 Builder.uiUserBoard.EndState();
                 prgThread.IsIndeterminate = false;
-                ThreadMgr.PrintText("Winner\n" + ResultSchema.WinnerNumber + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\n" + SettingSchema.Location + "\n" + SettingSchema.Description, 14);
+                ThreadMgr.PrintText("Winner\n" + ResultSchema.WinnerNumber + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\n" + SettingSchema.Location + "\n" + SettingSchema.Description + "\n" + SettingSchema.Time, 14);
                 return;
             }
                 // Print text

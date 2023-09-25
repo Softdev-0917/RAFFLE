@@ -14,14 +14,15 @@ namespace RAFFLE.Manager
     public static class ThreadMgr
     {
         public static int curProgress = 0;
+        public static int timerSpc = 5;
         public static void PrintText(string text, int fontsize)
         {
             // Create a new PrintDocument object
             PrintDocument document = new PrintDocument();
 
             document.DocumentName = "Printing Test";
-            document.DefaultPageSettings.PaperSize = new PaperSize("Custom", cmToPixels(5.6f), cmToPixels(10.5f));
-            document.DefaultPageSettings.Margins = new Margins(cmToPixels(1f), cmToPixels(1f), cmToPixels(1f), cmToPixels(1f));
+            document.DefaultPageSettings.PaperSize = new PaperSize("Custom", cmToPixels(10f), cmToPixels(10.5f));
+            document.DefaultPageSettings.Margins = new Margins(cmToPixels(3f), 0, 0, 0);
 
             document.PrintPage += (sender, e) =>
             {
