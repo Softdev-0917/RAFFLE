@@ -111,16 +111,16 @@ namespace RAFFLE.UI
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            lblWinnerPrice.Text = "Winner Prize: " + ResultSchema.WinnerPrice;
             txtImpluse.Focus();
             if (sImpluse != "" && sImpluse != null && sImpluse.Length > 0)
             {
                 ResultSchema.WinnerPrice = ThreadMgr.curProgress * SettingSchema.Price * (1 - SettingSchema.Rate / 100);
-                ThreadMgr.PrintText(ThreadMgr.curProgress + "\n" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "\n" + SettingSchema.Location + "\n" + SettingSchema.Description, 14);
+                ThreadMgr.PrintText("Ticket " + ThreadMgr.curProgress + "\n" + SettingSchema.Time + "\n" + SettingSchema.Location + "\n" + SettingSchema.Description, 14);
                 txtImpluse.Text = sImpluse;
                 sImpluse = sImpluse.Substring(1);
                 txtImpluse.Text = sImpluse;
                 ThreadMgr.curProgress++;
+                lblWinnerPrice.Text = "Winner Prize: " + ResultSchema.WinnerPrice;
             }
         }
 

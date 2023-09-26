@@ -13,7 +13,7 @@ namespace RAFFLE.Manager
 {
     public static class ThreadMgr
     {
-        public static int curProgress = 0;
+        public static int curProgress = 1;
         public static int timerSpc = 5;
         public static void PrintText(string text, int fontsize)
         {
@@ -41,6 +41,7 @@ namespace RAFFLE.Manager
             document.Print();
             document.EndPrint += (sender, e) =>
             {
+                MessageBox.Show("test");
             };
 
         }
